@@ -2,7 +2,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Mini Clinic Management
+namespace MiniClinicManagement.Middleware
 {
     public class ExceptionMiddleware
     {

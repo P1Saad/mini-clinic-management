@@ -2,15 +2,13 @@
 using Microsoft.Extensions.Logging;
 using System;
 
-namespace UserManagement.Api.Controllers
+namespace MiniClinicManagement.Controllers.Base
 {
-    [ApiController]
-    [Route("api/[controller]")]
     public abstract class BaseController : ControllerBase
     {
-        protected readonly ILogger<BaseController> Logger;
+        protected readonly ILogger Logger;
 
-        protected BaseController(ILogger<BaseController> logger)
+        protected BaseController(ILogger logger)
         {
             Logger = logger;
         }

@@ -13,7 +13,9 @@ namespace Application.DTOs
         [RegularExpression(@"^(?!string$)", ErrorMessage = "Patient name is required.")]
         public string PatientName { get; set; }
 
-
+        [Required]
+        [RegularExpression(@"^(?!string$)", ErrorMessage = "Patient phone is required.")]
+       
         public string Phone { get; set; }
         public int Age { get; set; }
         [Required]

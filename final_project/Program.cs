@@ -42,7 +42,7 @@ namespace MiniClinicManagement
                         services.AddScoped<IAppointmentsRepository, AppointmentsRepository>();
 
                         // 3. DI Services
-                        services.AddScoped<IAppointmentService,AppointmentServiceImpl>();
+                        services.AddScoped<IAppointmentService, AppointmentServiceImpl>();
                         services.AddScoped<IDoctorService, DoctorServiceImpl>();
                         services.AddScoped<IPatientService, PatientServiceImpl>();
                         services.AddScoped<ISpecialtyService, SpecialtyServiceImpl>();

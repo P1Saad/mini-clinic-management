@@ -3,10 +3,9 @@ using Application.IService;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using UserManagement.Api.Controllers;
+using MiniClinicManagement.Controllers.Base;
 
-namespace UserManagement.API.Controllers
+namespace MiniClinicManagement.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
