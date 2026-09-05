@@ -64,6 +64,10 @@ namespace MiniClinicManagement.Controllers
                 _userService.CreateUser(userDto);
                 return HandleResponse(new { message = "User created successfully.", success = true });
             }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { message = ex.Message, success = false });
+            }
             catch (Exception ex)
             {
                 return HandleError(ex, "Failed to create user.");
@@ -83,13 +87,13 @@ namespace MiniClinicManagement.Controllers
                 _userService.UpdateUser(userDto);
                 return HandleResponse(new { message = "User updated successfully.", success = true });
             }
-            catch (ArgumentNullException)
+            catch (ArgumentException ex)
             {
-                return NotFound(new { message = "User not found to update.", success = false });
+                return BadRequest(new { message = ex.Message, success = false });
             }
             catch (Exception ex)
             {
-                return HandleError(ex, "Failed to update user.");
+                return HandleError(ex, "Failed to update user or User not found to.");
             }
         }
 

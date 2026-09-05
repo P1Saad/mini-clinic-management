@@ -5,6 +5,7 @@ using Domain.Entities;
 using Domain.IRepository;
 using System;
 using System.Collections.Generic;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Application.ServiceImpl
 {
@@ -18,10 +19,35 @@ namespace Application.ServiceImpl
             _patientRepository = patientRepository;
             _mapper = mapper;
         }
-
+        private void validation(PatientDto patientDto)
+        {
+            if (patientDto == null) {
+                throw new ArgumentNullException(nameof(patientDto));
+            }
+                if (patientDto.PatientName == "string" || patientDto.PatientName == null)
+                {
+                    throw new ArgumentException("Patient name is required ");
+                }
+            if (patientDto.Gender == "string" || patientDto.Gender == null)
+            {
+                throw new ArgumentException("Patient gender is required");
+            }
+            if (patientDto.Phone == "string" || patientDto.Phone == null)
+            {
+                throw new ArgumentException("Patient phone is required");
+            }
+            if (patientDto.Phone.Length != 9)
+            {
+                throw new ArgumentException("Phone number is not valid");
+            }
+            if (patientDto.Age <= 0)
+            {
+                throw new ArgumentException("Age is not correct");
+            }
+        } 
         public void CreatePatient(PatientDto patientDto)
         {
-            if (patientDto == null) throw new ArgumentNullException(nameof(patientDto));
+            validation(patientDto);
 
             var entity = _mapper.Map<Patients>(patientDto);
             entity.Id = 0;
@@ -45,7 +71,7 @@ namespace Application.ServiceImpl
 
         public void UpdatePatient(PatientDto patientDto)
         {
-            if (patientDto == null) throw new ArgumentNullException(nameof(patientDto));
+            validation(patientDto);
 
             var existingEntity = _patientRepository.GetById(patientDto.Id);
             if (existingEntity == null) throw new ArgumentException("Patient not found.");

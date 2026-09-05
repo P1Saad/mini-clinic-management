@@ -18,11 +18,18 @@ namespace Application.ServiceImpl
             _specialtyRepository = specialtyRepository;
             _mapper = mapper;
         }
-
-        public void CreateSpecialty(SpecialtyDto specialtyDto)
+        private void validation(SpecialtyDto specialtyDto)
         {
             if (specialtyDto == null) throw new ArgumentNullException(nameof(specialtyDto));
+            if (specialtyDto.SpecialtyName == "string" || specialtyDto.SpecialtyName == null)
+            {
+                throw new ArgumentNullException("Specialty Name is required");
+            }
+        }
+        public void CreateSpecialty(SpecialtyDto specialtyDto)
+        {
 
+            validation(specialtyDto);
             var entity = _mapper.Map<Specialties>(specialtyDto);
             entity.Id = 0;
 

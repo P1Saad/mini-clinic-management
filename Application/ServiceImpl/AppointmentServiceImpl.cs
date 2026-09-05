@@ -19,10 +19,29 @@ namespace Application.ServiceImpl
             _mapper = mapper;
         }
 
-        public void CreateAppointment(AppointmentDto appointmentDto)
+        private void validation(AppointmentDto appointmentDto)
         {
             if (appointmentDto == null) throw new ArgumentNullException(nameof(appointmentDto));
-
+            if (appointmentDto.AppointmentDate == DateTime.Parse("2026-09-05T16:57:52.135Z") || appointmentDto.AppointmentDate == null)
+            {
+                throw new ArgumentException("Appointment Date is required");
+            }
+            if (appointmentDto.PatientID <0 || appointmentDto.PatientID == null)
+            {
+                throw new ArgumentException("Patient ID is not valid");
+            }
+            if (appointmentDto.DoctorID <0 || appointmentDto.DoctorID == null)
+            {
+                throw new ArgumentException("Doctor ID is not valid");
+            }
+            if (appointmentDto.Status == "string" || appointmentDto.Status == null)
+            {
+                throw new ArgumentException("Status is required");
+            }
+        }
+        public void CreateAppointment(AppointmentDto appointmentDto)
+        {
+            validation(appointmentDto);
             var entity = _mapper.Map<Appointments>(appointmentDto);
             entity.Id = 0;
 
@@ -45,7 +64,7 @@ namespace Application.ServiceImpl
 
         public void UpdateAppointment(AppointmentDto appointmentDto)
         {
-            if (appointmentDto == null) throw new ArgumentNullException(nameof(appointmentDto));
+            validation(appointmentDto);
 
             var existingEntity = _appointmentRepository.GetById(appointmentDto.Id);
             if (existingEntity == null) throw new ArgumentException("Appointment not found.");

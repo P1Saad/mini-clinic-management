@@ -19,9 +19,33 @@ namespace Application.ServiceImpl
             _mapper = mapper;
         }
 
+        private void validattion(DoctorDto doctorDto)
+        {
+            if (doctorDto == null)
+            {
+                throw new ArgumentNullException(nameof(doctorDto));
+            }
+            if (doctorDto.DoctorName == "string" || doctorDto.DoctorName == null)
+            {
+                throw new ArgumentException("Doctor name is required");
+            }
+            if (doctorDto.SpecialtyID <0 || doctorDto.SpecialtyID == null)
+            {
+                throw new ArgumentException("Specialty ID is not valid");
+            }
+            if (doctorDto.Phone =="string" || doctorDto.Phone == null)
+            {
+                throw new ArgumentException("Phone number is required");
+            }
+            if(doctorDto.Phone.Length != 9)
+            {
+                throw new ArgumentException("Phone number is uncorrect");
+            }
+            
+        }
         public void CreateDoctor(DoctorDto doctorDto)
         {
-            if (doctorDto == null) throw new ArgumentNullException(nameof(doctorDto));
+            validattion(doctorDto);
 
             var entity = _mapper.Map<Doctors>(doctorDto);
             entity.Id = 0;
@@ -45,7 +69,7 @@ namespace Application.ServiceImpl
 
         public void UpdateDoctor(DoctorDto doctorDto)
         {
-            if (doctorDto == null) throw new ArgumentNullException(nameof(doctorDto));
+            validattion(doctorDto);
 
             var existingEntity = _doctorRepository.GetById(doctorDto.Id);
             if (existingEntity == null) throw new ArgumentException("Doctor not found.");

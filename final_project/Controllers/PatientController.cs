@@ -45,6 +45,7 @@ namespace MiniClinicManagement.Controllers
                 }
                 return HandleResponse(patient);
             }
+
             catch (Exception ex)
             {
                 return HandleError(ex, $"Failed to retrieve patient with ID: {id}.");
@@ -63,6 +64,10 @@ namespace MiniClinicManagement.Controllers
 
                 _patientService.CreatePatient(patientDto);
                 return HandleResponse(new { message = "Patient created successfully.", success = true });
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { message = ex.Message, success = false });
             }
             catch (Exception ex)
             {
@@ -83,13 +88,15 @@ namespace MiniClinicManagement.Controllers
                 _patientService.UpdatePatient(patientDto);
                 return HandleResponse(new { message = "Patient updated successfully.", success = true });
             }
-            catch (ArgumentException)
+            catch (ArgumentException ex)
             {
-                return NotFound(new { message = "Patient not found to update.", success = false });
+                return BadRequest(new { message = ex.Message, success = false });
             }
+
+
             catch (Exception ex)
             {
-                return HandleError(ex, "Failed to update patient.");
+                return HandleError(ex, "Failed to update patient. or Patient not found.");
             }
         }
 

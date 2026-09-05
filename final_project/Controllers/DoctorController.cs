@@ -64,6 +64,11 @@ namespace MiniClinicManagement.Controllers
                 _doctorService.CreateDoctor(doctorDto);
                 return HandleResponse(new { message = "Doctor created successfully.", success = true });
             }
+
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { message = ex.Message, success = false });
+            }
             catch (Exception ex)
             {
                 return HandleError(ex, "Failed to create doctor.");
@@ -83,13 +88,14 @@ namespace MiniClinicManagement.Controllers
                 _doctorService.UpdateDoctor(doctorDto);
                 return HandleResponse(new { message = "Doctor updated successfully.", success = true });
             }
-            catch (ArgumentException)
+            catch (ArgumentException ex)
             {
-                return NotFound(new { message = "Doctor not found to update.", success = false });
+                return BadRequest(new { message = ex.Message, success = false });
             }
+
             catch (Exception ex)
             {
-                return HandleError(ex, "Failed to update doctor.");
+                return HandleError(ex, "Failed to update doctor or Doctor not found.");
             }
         }
 

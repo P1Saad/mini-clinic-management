@@ -64,6 +64,10 @@ namespace MiniClinicManagement.Controllers
                 _specialtyService.CreateSpecialty(specialtyDto);
                 return HandleResponse(new { message = "Specialty created successfully.", success = true });
             }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { message = ex.Message, success = false });
+            }
             catch (Exception ex)
             {
                 return HandleError(ex, "Failed to create specialty.");

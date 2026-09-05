@@ -18,11 +18,26 @@ namespace Application.ServiceImpl
             _userRepository = userRepository;
             _mapper = mapper;
         }
+        private void validation (UserDto userDto)
+        {
+            if (userDto == null) throw new ArgumentNullException(nameof(userDto));
+            if (userDto.UserName == "string" || userDto.UserName == null)
+            {
+                throw new ArgumentException("User name is required");
+            }
+            if (userDto.Password == "string" || userDto.Password == null)
+            {
+                throw new ArgumentException("User password is required");
+            }
+            if (userDto.FullName == "string" || userDto.FullName == null)
+            {
+                throw new ArgumentException("User Full Name is required");
+            }
+        }
 
         public void CreateUser(UserDto userDto)
         {
-            if (userDto == null) throw new ArgumentNullException(nameof(userDto));
-
+            validation(userDto);
             var userEntity = _mapper.Map<Users>(userDto);
 
             userEntity.Id = 0;
@@ -49,7 +64,7 @@ namespace Application.ServiceImpl
 
         public void UpdateUser(UserDto userDto)
         {
-            if (userDto == null) throw new ArgumentNullException(nameof(userDto));
+            validation(userDto);
 
             var existingUser = _userRepository.GetById(userDto.Id);
             if (existingUser == null) throw new ArgumentNullException(nameof(userDto));
