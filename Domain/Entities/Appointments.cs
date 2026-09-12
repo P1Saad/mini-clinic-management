@@ -10,7 +10,7 @@ namespace Domain.Entities
     public class Appointments : BaseEntity
     {
         public Patients Patient { get; set; }
-        public int PaientID { get; set; }
+        public int PatientID { get; set; }
         public Doctors Doctor { get; set; }
         public int DoctorID { get; set; }
 
