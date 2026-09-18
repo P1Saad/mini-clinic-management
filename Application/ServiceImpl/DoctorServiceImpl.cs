@@ -25,10 +25,7 @@ namespace Application.ServiceImpl
             {
                 throw new ArgumentNullException(nameof(doctorDto));
             }
-            if (doctorDto.DoctorName == "string" || doctorDto.DoctorName == null)
-            {
-                throw new ArgumentException("Doctor name is required");
-            }
+
             if (doctorDto.SpecialtyID <0 || doctorDto.SpecialtyID == null)
             {
                 throw new ArgumentException("Specialty ID is not valid");

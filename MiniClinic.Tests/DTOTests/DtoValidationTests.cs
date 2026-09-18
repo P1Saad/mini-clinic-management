@@ -16,6 +16,14 @@ namespace MiniClinic.Tests.DTOTests
         [TestMethod] public void AppointmentDto_NullStatus_HasValidationError() => Assert.IsTrue(Validate(new AppointmentDto { PatientID=1, DoctorID=1, AppointmentDate=DateTime.UtcNow }).Count >= 1);
         [TestMethod] public void SpecialtyDto_EmptyName_HasValidationError() => Assert.IsTrue(Validate(new SpecialtyDto { SpecialtyName="" }).Count >= 1);
         [TestMethod] public void UserDto_ValidData_HasNoValidationErrors() => Assert.AreEqual(0, Validate(new UserDto { UserName="ali", Password="secret", FullName="Ali User" }).Count);
-        [TestMethod] public void UserDto_WhitespaceValues_AreAcceptedByRequiredAttribute() => Assert.AreEqual(0, Validate(new UserDto { UserName=" ", Password=" ", FullName=" " }).Count);
+        [TestMethod]
+        public void UserDto_WhitespaceValues_HaveValidationErrors()
+    => Assert.IsTrue(
+        Validate(new UserDto
+        {
+            UserName = " ",
+            Password = " ",
+            FullName = " "
+        }).Count >= 3);
     }
 }
