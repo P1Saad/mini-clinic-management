@@ -14,7 +14,7 @@ namespace Application.DTOs
         public string PatientName { get; set; }
         [Required]
         public string Phone { get; set; }
-        [Required]
+        [Range(1,140)]
         public int Age { get; set; }
         [Required]
         public string Gender { get; set; }

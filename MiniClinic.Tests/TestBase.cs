@@ -13,7 +13,12 @@ namespace MiniClinic.Tests
         protected static IList<ValidationResult> Validate(object value)
         {
             var results = new List<ValidationResult>();
-            Validator.TryValidateObject(value, new ValidationContext(value), results, true);
+            System.ComponentModel.DataAnnotations.Validator.TryValidateObject(
+                value,
+                new System.ComponentModel.DataAnnotations.ValidationContext(value),
+                results,
+                true
+            );
             return results;
         }
         protected static NullLogger<T> Logger<T>() => NullLogger<T>.Instance;
